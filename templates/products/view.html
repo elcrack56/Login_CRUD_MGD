@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle del Producto{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">Detalle del Producto: {{ product.name }}</h3>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text"><strong>Descripción:</strong> {{ product.description }}</p>
+                    <p class="card-text"><strong>Talla:</strong> {{ product.size }}</p>
+                    <p class="card-text"><strong>Stock:</strong> <span class="badge bg-secondary">{{ product.stock }}</span> unidades</p>
+                    <p class="card-text"><strong>Precio:</strong> ${{ product.price | round(2) }}</p>
+                    <p class="card-text"><small class="text-muted">Última Actualización: {{ product.last_updated if product.last_updated else 'N/A' }}</small></p>
+                    <hr>
+                    <a href="{{ url_for('product.edit_product', id=product._id) }}" class="btn btn-warning me-2">Editar</a>
+                    <form action="{{ url_for('product.delete_product', id=product._id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este producto? Esta acción no se puede deshacer.')">
+                        <button type="submit" class="btn btn-danger me-2">Eliminar</button>
+                    </form>
+                    <a href="{{ url_for('product.list_products') }}" class="btn btn-secondary">Volver al Inventario</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
